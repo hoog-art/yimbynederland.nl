@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YIMBY Nederland - Setup Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Guide-specific styles */
+    .guide-section { margin-bottom:3rem; }
+    .guide-section h3 { color:var(--accent); margin-bottom:.75rem; font-size:1.15rem; }
+    .guide-section h4 { color:var(--text); margin:1.25rem 0 .5rem; font-size:1rem; }
+    .step-list { counter-reset:steps; list-style:none; padding:0; }
+    .step-list li { counter-increment:steps; position:relative; padding:1rem 1rem 1rem 3.25rem;
+      background:var(--dark-700); border:1px solid var(--border); border-radius:10px; margin-bottom:.75rem; }
+    .step-list li::before { content:counter(steps); position:absolute; left:1rem; top:1rem;
+      width:1.6rem; height:1.6rem; border-radius:50%; background:var(--accent); color:var(--dark-900);
+      font-weight:700; font-size:.85rem; display:flex; align-items:center; justify-content:center; }
+    pre.code-block { background:var(--dark-900); border:1px solid var(--border-l); border-radius:8px;
+      padding:1rem 1.25rem; overflow-x:auto; font-size:.85rem; line-height:1.6; color:var(--text);
+      font-family:'Fira Code','SF Mono',Consolas,monospace; margin:.75rem 0; }
+    pre.code-block .cm { color:var(--text-muted); }
+    pre.code-block .kw { color:var(--accent); }
+    pre.code-block .str { color:#FFD166; }
+    .callout { background:var(--accent-glow); border-left:3px solid var(--accent);
+      padding:1rem 1.25rem; border-radius:0 8px 8px 0; margin:1rem 0; font-size:.92rem; }
+    .callout strong { color:var(--accent); }
+    .channel-table { width:100%; border-collapse:collapse; margin:.75rem 0; font-size:.9rem; }
+    .channel-table th { text-align:left; padding:.6rem .75rem; background:var(--dark-600);
+      border:1px solid var(--border-l); color:var(--accent); font-weight:600; }
+    .channel-table td { padding:.6rem .75rem; border:1px solid var(--border);
+      background:var(--dark-700); color:var(--text); }
+    .channel-table td code { background:var(--dark-900); padding:.15rem .4rem; border-radius:4px;
+      font-size:.85em; color:var(--accent); }
+    .toc-mini { background:var(--dark-700); border:1px solid var(--border-l); border-radius:10px;
+      padding:1.25rem 1.5rem; margin-bottom:2.5rem; }
+    .toc-mini h3 { margin-bottom:.75rem; color:var(--text); font-size:1rem; }
+    .toc-mini ol { padding-left:1.25rem; }
+    .toc-mini li { margin-bottom:.35rem; }
+    .toc-mini a { color:var(--accent); text-decoration:none; }
+    .toc-mini a:hover { text-decoration:underline; }
+    .badge { display:inline-block; background:var(--accent); color:var(--dark-900);
+      font-weight:700; font-size:.7rem; padding:.15rem .5rem; border-radius:4px;
+      text-transform:uppercase; margin-left:.5rem; vertical-align:middle; }
+    .badge.free { background:var(--accent); }
+    .badge.optional { background:var(--dark-400); color:var(--text); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="top-nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <span class="accent">YIMBY</span> Nederland
+    </a>
+    <button class="hamburger" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-lang="en">Home</a><a href="index.html" data-lang="nl">Home</a></li>
+      <li><a href="policy.html" data-lang="en">Policy</a><a href="policy.html" data-lang="nl">Beleid</a></li>
+      <li><a href="report.html" data-lang="en">Report a Delay</a><a href="report.html" data-lang="nl">Meld Vertraging</a></li>
+      <li><a href="about.html" data-lang="en">About</a><a href="about.html" data-lang="nl">Over Ons</a></li>
+      <li>
+        <span class="lang-toggle">
+          <button data-lang="en">EN</button>
+          <button data-lang="nl">NL</button>
+        </span>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" style="padding:4rem 0 2rem;">
+  <div class="wrap">
+    <h1 data-lang="en">Backend Setup Guide</h1>
+    <h1 data-lang="nl">Backend Installatiehandleiding</h1>
+    <p class="lead" data-lang="en">
+      How to wire up the Report a Delay form so submissions land in Google Sheets and automatically post to Discord.
+    </p>
+    <p class="lead" data-lang="nl">
+      Hoe je het Meld Vertraging-formulier koppelt zodat inzendingen in Google Sheets terechtkomen en automatisch naar Discord worden gepost.
+    </p>
+  </div>
+</header>
+
+<!-- ═══ MAIN GUIDE ═══ -->
+<section class="section">
+  <div class="wrap" style="max-width:860px;">
+
+    <!-- Table of Contents -->
+    <div class="toc-mini">
+      <h3 data-lang="en">Contents</h3>
+      <h3 data-lang="nl">Inhoud</h3>
+      <ol>
+        <li><a href="#overview" data-lang="en">Architecture Overview</a><a href="#overview" data-lang="nl">Architectuuroverzicht</a></li>
+        <li><a href="#discord" data-lang="en">Create the Discord Server</a><a href="#discord" data-lang="nl">Maak de Discord-server</a></li>
+        <li><a href="#form" data-lang="en">Create the Google Form</a><a href="#form" data-lang="nl">Maak het Google Formulier</a></li>
+        <li><a href="#webhook" data-lang="en">Connect Sheets to Discord (Webhook)</a><a href="#webhook" data-lang="nl">Verbind Sheets met Discord (Webhook)</a></li>
+        <li><a href="#embed" data-lang="en">Embed or Link the Form on the Site</a><a href="#embed" data-lang="nl">Formulier Insluiten of Linken</a></li>
+        <li><a href="#workflow" data-lang="en">Investigation Workflow</a><a href="#workflow" data-lang="nl">Onderzoeksworkflow</a></li>
+      </ol>
+    </div>
+
+    <!-- ── 1. Overview ── -->
+    <div class="guide-section" id="overview">
+      <h2 data-lang="en">1. Architecture Overview</h2>
+      <h2 data-lang="nl">1. Architectuuroverzicht</h2>
+
+      <p data-lang="en">The pipeline is simple and entirely free-tier:</p>
+      <p data-lang="nl">De pipeline is simpel en volledig gratis:</p>
+
+      <div class="callout">
+        <strong data-lang="en">Flow:</strong>
+        <strong data-lang="nl">Stroom:</strong>
+        <span data-lang="en">User fills form &rarr; Google Form &rarr; Google Sheets (database) &rarr; Apps Script fires &rarr; Discord webhook posts to #new-submissions</span>
+        <span data-lang="nl">Gebruiker vult formulier in &rarr; Google Formulier &rarr; Google Sheets (database) &rarr; Apps Script vuurt &rarr; Discord webhook post naar #nieuwe-meldingen</span>
+      </div>
+
+      <p data-lang="en">
+        Google Sheets acts as the central database: every submission is a row, filterable and searchable. The Discord webhook sends real-time notifications so the community and investigation team see new reports instantly.
+      </p>
+      <p data-lang="nl">
+        Google Sheets fungeert als de centrale database: elke inzending is een rij, filterbaar en doorzoekbaar. De Discord webhook stuurt real-time meldingen zodat de community en het onderzoeksteam nieuwe rapporten direct zien.
+      </p>
+
+      <p data-lang="en"><strong>Cost:</strong> completely free. Google Forms, Sheets, Apps Script, and Discord webhooks are all free-tier.</p>
+      <p data-lang="nl"><strong>Kosten:</strong> volledig gratis. Google Forms, Sheets, Apps Script en Discord webhooks zijn allemaal gratis.</p>
+    </div>
+
+    <!-- ── 2. Discord Server ── -->
+    <div class="guide-section" id="discord">
+      <h2 data-lang="en">2. Create the Discord Server</h2>
+      <h2 data-lang="nl">2. Maak de Discord-server</h2>
+
+      <ol class="step-list">
+        <li data-lang="en">Go to <strong>discord.com</strong>, click <strong>"+"</strong> in the left sidebar, choose <strong>"Create My Own"</strong>, then <strong>"For a club or community"</strong>. Name it <strong>YIMBY Nederland</strong>.</li>
+        <li data-lang="nl">Ga naar <strong>discord.com</strong>, klik op <strong>"+"</strong> in de linkerzijbalk, kies <strong>"Maak mijn eigen"</strong>, dan <strong>"Voor een club of community"</strong>. Noem het <strong>YIMBY Nederland</strong>.</li>
+
+        <li data-lang="en">Create the following channels (right-click category &rarr; Create Channel):</li>
+        <li data-lang="nl">Maak de volgende kanalen aan (rechtermuisklik op categorie &rarr; Kanaal aanmaken):</li>
+      </ol>
+
+      <h4 data-lang="en">Recommended Channel Structure</h4>
+      <h4 data-lang="nl">Aanbevolen Kanaalstructuur</h4>
+
+      <table class="channel-table">
+        <thead>
+          <tr>
+            <th data-lang="en">Channel</th><th data-lang="en">Purpose</th>
+            <th data-lang="nl">Kanaal</th><th data-lang="nl">Doel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang="en"><code>#welcome</code></td><td data-lang="en">Server rules, links to the website and YouTube</td>
+            <td data-lang="nl"><code>#welkom</code></td><td data-lang="nl">Serverregels, links naar website en YouTube</td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#general</code></td><td data-lang="en">Main chat for housing discussions</td>
+            <td data-lang="nl"><code>#algemeen</code></td><td data-lang="nl">Algemene chat voor woningdiscussies</td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#new-submissions</code></td><td data-lang="en">Automated: webhook posts new form entries here <span class="badge free">Bot Only</span></td>
+            <td data-lang="nl"><code>#nieuwe-meldingen</code></td><td data-lang="nl">Geautomatiseerd: webhook post hier nieuwe inzendingen <span class="badge free">Alleen Bot</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#under-investigation</code></td><td data-lang="en">Moved here manually when Hoog picks up a case</td>
+            <td data-lang="nl"><code>#in-onderzoek</code></td><td data-lang="nl">Handmatig verplaatst wanneer Hoog een zaak oppakt</td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#ready-for-video</code></td><td data-lang="en">Cases with enough evidence for a Hoog episode</td>
+            <td data-lang="nl"><code>#klaar-voor-video</code></td><td data-lang="nl">Zaken met genoeg bewijs voor een Hoog-aflevering</td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#policy-discussion</code></td><td data-lang="en">Debate on LVT, zoning reform, etc.</td>
+            <td data-lang="nl"><code>#beleidsdiscussie</code></td><td data-lang="nl">Debat over LVT, bestemmingsplanhervorming, etc.</td>
+          </tr>
+          <tr>
+            <td data-lang="en"><code>#hoog-updates</code></td><td data-lang="en">Announcements about new Hoog videos</td>
+            <td data-lang="nl"><code>#hoog-updates</code></td><td data-lang="nl">Aankondigingen over nieuwe Hoog-video's</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4 data-lang="en">Create the Webhook</h4>
+      <h4 data-lang="nl">Maak de Webhook</h4>
+
+      <ol class="step-list">
+        <li data-lang="en">Right-click <code>#new-submissions</code> &rarr; <strong>Edit Channel</strong> &rarr; <strong>Integrations</strong> &rarr; <strong>Webhooks</strong> &rarr; <strong>New Webhook</strong>.</li>
+        <li data-lang="nl">Rechtermuisklik op <code>#nieuwe-meldingen</code> &rarr; <strong>Kanaal bewerken</strong> &rarr; <strong>Integraties</strong> &rarr; <strong>Webhooks</strong> &rarr; <strong>Nieuwe Webhook</strong>.</li>
+
+        <li data-lang="en">Name it <strong>YIMBY Report Bot</strong>. Click <strong>Copy Webhook URL</strong> and save it somewhere safe - you'll need it in step 4.</li>
+        <li data-lang="nl">Noem het <strong>YIMBY Report Bot</strong>. Klik op <strong>Webhook-URL kopiëren</strong> en bewaar het ergens veilig - je hebt het nodig in stap 4.</li>
+      </ol>
+
+      <h4 data-lang="en">Create the Invite Link</h4>
+      <h4 data-lang="nl">Maak de Uitnodigingslink</h4>
+
+      <ol class="step-list">
+        <li data-lang="en">Go to <strong>Server Settings</strong> &rarr; <strong>Invites</strong> &rarr; create a permanent, never-expire invite link.</li>
+        <li data-lang="nl">Ga naar <strong>Serverinstellingen</strong> &rarr; <strong>Uitnodigingen</strong> &rarr; maak een permanente uitnodigingslink die nooit verloopt.</li>
+
+        <li data-lang="en">Replace every <code>href="#"</code> placeholder on the site (in all four HTML files) with this invite URL: search for <code>Discord Community</code> and update the links.</li>
+        <li data-lang="nl">Vervang elke <code>href="#"</code> placeholder op de site (in alle vier HTML-bestanden) met deze uitnodigings-URL: zoek naar <code>Discord Community</code> en werk de links bij.</li>
+      </ol>
+    </div>
+
+    <!-- ── 3. Google Form ── -->
+    <div class="guide-section" id="form">
+      <h2 data-lang="en">3. Create the Google Form</h2>
+      <h2 data-lang="nl">3. Maak het Google Formulier</h2>
+
+      <p data-lang="en">
+        The report.html page currently shows a UI mockup. You need to create a real Google Form that matches those fields, then either embed it or link to it.
+      </p>
+      <p data-lang="nl">
+        De report.html pagina toont momenteel een UI-mockup. Je moet een echt Google Formulier maken dat overeenkomt met die velden, en het vervolgens insluiten of ernaartoe linken.
+      </p>
+
+      <ol class="step-list">
+        <li data-lang="en">Go to <a href="https://forms.google.com" target="_blank" style="color:var(--accent);">forms.google.com</a> and create a new blank form. Title it <strong>"Report a Housing Delay - YIMBY Nederland"</strong>.</li>
+        <li data-lang="nl">Ga naar <a href="https://forms.google.com" target="_blank" style="color:var(--accent);">forms.google.com</a> en maak een nieuw leeg formulier. Noem het <strong>"Meld een Woningvertraging - YIMBY Nederland"</strong>.</li>
+
+        <li data-lang="en">Add the following fields (matching report.html):</li>
+        <li data-lang="nl">Voeg de volgende velden toe (overeenkomend met report.html):</li>
+      </ol>
+
+      <table class="channel-table">
+        <thead>
+          <tr>
+            <th data-lang="en">Field</th><th data-lang="en">Type</th><th data-lang="en">Required</th>
+            <th data-lang="nl">Veld</th><th data-lang="nl">Type</th><th data-lang="nl">Verplicht</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-lang="en">Full Name</td><td data-lang="en">Short answer</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Volledige Naam</td><td data-lang="nl">Kort antwoord</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Email Address</td><td data-lang="en">Short answer (email validation)</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">E-mailadres</td><td data-lang="nl">Kort antwoord (e-mailvalidatie)</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Phone</td><td data-lang="en">Short answer</td><td data-lang="en">No</td>
+              <td data-lang="nl">Telefoon</td><td data-lang="nl">Kort antwoord</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Municipality</td><td data-lang="en">Short answer</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Gemeente</td><td data-lang="nl">Kort antwoord</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Project Type</td><td data-lang="en">Dropdown (9 options)</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Projecttype</td><td data-lang="nl">Dropdown (9 opties)</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Number of Units</td><td data-lang="en">Short answer (number)</td><td data-lang="en">No</td>
+              <td data-lang="nl">Aantal Woningen</td><td data-lang="nl">Kort antwoord (nummer)</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Address / Location</td><td data-lang="en">Short answer</td><td data-lang="en">No</td>
+              <td data-lang="nl">Adres / Locatie</td><td data-lang="nl">Kort antwoord</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Delay Causes</td><td data-lang="en">Checkboxes (10 options)</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Oorzaken Vertraging</td><td data-lang="nl">Selectievakjes (10 opties)</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Start Date</td><td data-lang="en">Date</td><td data-lang="en">No</td>
+              <td data-lang="nl">Startdatum</td><td data-lang="nl">Datum</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Current Status</td><td data-lang="en">Dropdown</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Huidige Status</td><td data-lang="nl">Dropdown</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">Months Delayed</td><td data-lang="en">Short answer (number)</td><td data-lang="en">No</td>
+              <td data-lang="nl">Maanden Vertraging</td><td data-lang="nl">Kort antwoord (nummer)</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Extra Cost Estimate</td><td data-lang="en">Short answer</td><td data-lang="en">No</td>
+              <td data-lang="nl">Geschatte Meerkosten</td><td data-lang="nl">Kort antwoord</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Your Story</td><td data-lang="en">Long answer (paragraph)</td><td data-lang="en">Yes</td>
+              <td data-lang="nl">Jouw Verhaal</td><td data-lang="nl">Lang antwoord (alinea)</td><td data-lang="nl">Ja</td></tr>
+          <tr><td data-lang="en">File Upload</td><td data-lang="en">File upload</td><td data-lang="en">No</td>
+              <td data-lang="nl">Bestandsupload</td><td data-lang="nl">Bestandsupload</td><td data-lang="nl">Nee</td></tr>
+          <tr><td data-lang="en">Links / References</td><td data-lang="en">Long answer</td><td data-lang="en">No</td>
+              <td data-lang="nl">Links / Referenties</td><td data-lang="nl">Lang antwoord</td><td data-lang="nl">Nee</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout" data-lang="en">
+        <strong>Dropdown options for Project Type:</strong> Dakopbouw (roof extension), Optopping (adding stories), ADU / Mantelzorgwoning, Nieuwbouw (new build), Renovatie / Verbouwing (renovation), Splitsing (subdivision), Transformatie (conversion), Tiny house / Woonunit, Other
+      </div>
+      <div class="callout" data-lang="nl">
+        <strong>Dropdown-opties voor Projecttype:</strong> Dakopbouw, Optopping, ADU / Mantelzorgwoning, Nieuwbouw, Renovatie / Verbouwing, Splitsing, Transformatie, Tiny house / Woonunit, Anders
+      </div>
+
+      <div class="callout" data-lang="en">
+        <strong>Checkbox options for Delay Causes:</strong> Bezwaar (objection), Welstandscommissie (design committee), Permit processing delay, Bestemmingsplan conflict (zoning), Parking requirements, Height restrictions, Monument / heritage, Stikstof (nitrogen rules), Circular building rules, Other
+      </div>
+      <div class="callout" data-lang="nl">
+        <strong>Selectievakjes voor Oorzaken:</strong> Bezwaar, Welstandscommissie, Vergunningsvertraging, Bestemmingsplanconflict, Parkeereisen, Hoogtebeperkingen, Monument / erfgoed, Stikstof, Circulaire bouweisen, Anders
+      </div>
+
+      <ol class="step-list" start="3">
+        <li data-lang="en">In the form's <strong>Responses</strong> tab, click the green Sheets icon to link responses to a new Google Sheet. This creates your central database.</li>
+        <li data-lang="nl">Klik in het tabblad <strong>Reacties</strong> van het formulier op het groene Sheets-icoon om reacties te koppelen aan een nieuw Google Sheet. Dit maakt je centrale database.</li>
+      </ol>
+    </div>
+
+    <!-- ── 4. Webhook ── -->
+    <div class="guide-section" id="webhook">
+      <h2 data-lang="en">4. Connect Sheets to Discord (Webhook)</h2>
+      <h2 data-lang="nl">4. Verbind Sheets met Discord (Webhook)</h2>
+
+      <p data-lang="en">
+        This is the magic bit: a small Google Apps Script that fires whenever a new form response arrives and sends a formatted message to Discord.
+      </p>
+      <p data-lang="nl">
+        Dit is het magische deel: een klein Google Apps Script dat afvuurt wanneer een nieuw formulierreactie binnenkomt en een opgemaakt bericht naar Discord stuurt.
+      </p>
+
+      <ol class="step-list">
+        <li data-lang="en">Open the linked Google Sheet. Go to <strong>Extensions &rarr; Apps Script</strong>.</li>
+        <li data-lang="nl">Open het gekoppelde Google Sheet. Ga naar <strong>Extensies &rarr; Apps Script</strong>.</li>
+
+        <li data-lang="en">Delete any existing code and paste the script below.</li>
+        <li data-lang="nl">Verwijder eventuele bestaande code en plak het onderstaande script.</li>
+
+        <li data-lang="en">Replace <code>YOUR_DISCORD_WEBHOOK_URL</code> with the webhook URL you copied in step 2.</li>
+        <li data-lang="nl">Vervang <code>YOUR_DISCORD_WEBHOOK_URL</code> met de webhook-URL die je in stap 2 hebt gekopieerd.</li>
+      </ol>
+
+      <pre class="code-block"><span class="kw">const</span> DISCORD_WEBHOOK = <span class="str">"YOUR_DISCORD_WEBHOOK_URL"</span>;
+
+<span class="kw">function</span> onFormSubmit(e) {
+  <span class="kw">const</span> row = e.values;
+  <span class="cm">// Column indices depend on your form field order.</span>
+  <span class="cm">// Adjust these if you reorder fields in Google Forms.</span>
+  <span class="kw">const</span> timestamp  = row[0];
+  <span class="kw">const</span> name       = row[1];
+  <span class="kw">const</span> email      = row[2];
+  <span class="kw">const</span> phone      = row[3] || <span class="str">"Not provided"</span>;
+  <span class="kw">const</span> gemeente   = row[4];
+  <span class="kw">const</span> type       = row[5];
+  <span class="kw">const</span> units      = row[6] || <span class="str">"?"</span>;
+  <span class="kw">const</span> location   = row[7] || <span class="str">"Not provided"</span>;
+  <span class="kw">const</span> causes     = row[8];
+  <span class="kw">const</span> startDate  = row[9] || <span class="str">"Unknown"</span>;
+  <span class="kw">const</span> status     = row[10];
+  <span class="kw">const</span> months     = row[11] || <span class="str">"?"</span>;
+  <span class="kw">const</span> cost       = row[12] || <span class="str">"Unknown"</span>;
+  <span class="kw">const</span> story      = row[13];
+  <span class="kw">const</span> links      = row[15] || <span class="str">"None"</span>;
+
+  <span class="kw">const</span> embed = {
+    title: <span class="str">`New Delay Report: ${gemeente}`</span>,
+    color: 0x00C896, <span class="cm">// YIMBY green</span>
+    fields: [
+      { name: <span class="str">"Type"</span>,      value: type,    inline: <span class="kw">true</span> },
+      { name: <span class="str">"Gemeente"</span>,  value: gemeente, inline: <span class="kw">true</span> },
+      { name: <span class="str">"Units"</span>,     value: units,   inline: <span class="kw">true</span> },
+      { name: <span class="str">"Causes"</span>,    value: causes,  inline: <span class="kw">false</span> },
+      { name: <span class="str">"Status"</span>,    value: status,  inline: <span class="kw">true</span> },
+      { name: <span class="str">"Delayed"</span>,   value: months + <span class="str">" months"</span>, inline: <span class="kw">true</span> },
+      { name: <span class="str">"Extra Cost"</span>, value: cost,   inline: <span class="kw">true</span> },
+      { name: <span class="str">"Story"</span>,     value: story.substring(0, 1024), inline: <span class="kw">false</span> },
+      { name: <span class="str">"Links"</span>,     value: links,   inline: <span class="kw">false</span> }
+    ],
+    footer: { text: <span class="str">`Submitted by ${name} | ${timestamp}`</span> }
+  };
+
+  <span class="kw">const</span> payload = {
+    username: <span class="str">"YIMBY Report Bot"</span>,
+    embeds: [embed]
+  };
+
+  UrlFetchApp.fetch(DISCORD_WEBHOOK, {
+    method: <span class="str">"post"</span>,
+    contentType: <span class="str">"application/json"</span>,
+    payload: JSON.stringify(payload)
+  });
+}</pre>
+
+      <ol class="step-list" start="4">
+        <li data-lang="en">Set up the trigger: in Apps Script, click the <strong>clock icon</strong> (Triggers) in the left sidebar &rarr; <strong>Add Trigger</strong> &rarr; choose <strong>onFormSubmit</strong>, event source <strong>"From spreadsheet"</strong>, event type <strong>"On form submit"</strong>. Save and authorize.</li>
+        <li data-lang="nl">Stel de trigger in: klik in Apps Script op het <strong>klok-icoon</strong> (Triggers) in de linkerzijbalk &rarr; <strong>Trigger toevoegen</strong> &rarr; kies <strong>onFormSubmit</strong>, gebeurtenisbron <strong>"Van spreadsheet"</strong>, gebeurtenistype <strong>"Bij formulierinzending"</strong>. Opslaan en autoriseren.</li>
+
+        <li data-lang="en">Test: submit a test entry through the Google Form. Within seconds, a formatted embed should appear in <code>#new-submissions</code>.</li>
+        <li data-lang="nl">Test: dien een testinzending in via het Google Formulier. Binnen enkele seconden zou een opgemaakt bericht moeten verschijnen in <code>#nieuwe-meldingen</code>.</li>
+      </ol>
+
+      <div class="callout" data-lang="en">
+        <strong>Tip:</strong> If you add or reorder fields in the Google Form later, the column indices in the script will shift. Open the Sheet, check which column is which, and update the <code>row[n]</code> numbers accordingly.
+      </div>
+      <div class="callout" data-lang="nl">
+        <strong>Tip:</strong> Als je later velden toevoegt of herordent in het Google Formulier, verschuiven de kolomindexen in het script. Open het Sheet, controleer welke kolom wat is, en werk de <code>row[n]</code> nummers dienovereenkomstig bij.
+      </div>
+    </div>
+
+    <!-- ── 5. Embed ── -->
+    <div class="guide-section" id="embed">
+      <h2 data-lang="en">5. Embed or Link the Form on the Site</h2>
+      <h2 data-lang="nl">5. Formulier Insluiten of Linken op de Site</h2>
+
+      <p data-lang="en">You have two options for connecting the form to report.html:</p>
+      <p data-lang="nl">Je hebt twee opties om het formulier te verbinden met report.html:</p>
+
+      <h4 data-lang="en">Option A: Replace the mockup form with a Google Form embed</h4>
+      <h4 data-lang="nl">Optie A: Vervang het mockup-formulier met een Google Form embed</h4>
+
+      <ol class="step-list">
+        <li data-lang="en">In Google Forms, click <strong>Send</strong> &rarr; click the <strong>&lt;/&gt;</strong> embed icon &rarr; copy the iframe code.</li>
+        <li data-lang="nl">Klik in Google Forms op <strong>Verzenden</strong> &rarr; klik op het <strong>&lt;/&gt;</strong> embed-icoon &rarr; kopieer de iframe-code.</li>
+
+        <li data-lang="en">In report.html, find the <code>&lt;form&gt;...&lt;/form&gt;</code> block and replace it with the iframe. Set width to 100% and height to at least 2400px.</li>
+        <li data-lang="nl">Zoek in report.html het <code>&lt;form&gt;...&lt;/form&gt;</code> blok en vervang het door de iframe. Stel breedte in op 100% en hoogte op minimaal 2400px.</li>
+      </ol>
+
+      <pre class="code-block"><span class="cm">&lt;!-- Replace the &lt;form&gt; block in report.html with: --&gt;</span>
+&lt;iframe
+  src=<span class="str">"https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"</span>
+  width=<span class="str">"100%"</span>
+  height=<span class="str">"2400"</span>
+  frameborder=<span class="str">"0"</span>
+  marginheight=<span class="str">"0"</span>
+  marginwidth=<span class="str">"0"</span>
+  style=<span class="str">"border-radius:12px; background:var(--dark-700);"</span>
+&gt;Loading...&lt;/iframe&gt;</pre>
+
+      <h4 data-lang="en">Option B: Keep the styled mockup, redirect to Google Form</h4>
+      <h4 data-lang="nl">Optie B: Behoud het gestijlde mockup, redirect naar Google Form</h4>
+
+      <p data-lang="en">
+        If you prefer the current dark-themed form design, you can keep it as-is and add a submit handler that opens the Google Form in a new tab (pre-filled if desired). This is less seamless but preserves the site's look.
+      </p>
+      <p data-lang="nl">
+        Als je de voorkeur geeft aan het huidige donkere formulierontwerp, kun je het behouden en een submit-handler toevoegen die het Google Formulier opent in een nieuw tabblad (vooraf ingevuld indien gewenst). Dit is minder naadloos maar behoudt de look van de site.
+      </p>
+
+      <pre class="code-block"><span class="cm">// Add to shared.js - redirects the mockup form to Google Forms</span>
+<span class="kw">const</span> reportForm = document.querySelector(<span class="str">'.report-form'</span>);
+<span class="kw">if</span> (reportForm) {
+  reportForm.addEventListener(<span class="str">'submit'</span>, (e) =&gt; {
+    e.preventDefault();
+    window.open(<span class="str">'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform'</span>, <span class="str">'_blank'</span>);
+  });
+}</pre>
+    </div>
+
+    <!-- ── 6. Workflow ── -->
+    <div class="guide-section" id="workflow">
+      <h2 data-lang="en">6. Investigation Workflow</h2>
+      <h2 data-lang="nl">6. Onderzoeksworkflow</h2>
+
+      <p data-lang="en">Once the pipeline is live, here's how to manage incoming reports:</p>
+      <p data-lang="nl">Zodra de pipeline live is, kun je inkomende rapporten als volgt beheren:</p>
+
+      <ol class="step-list">
+        <li data-lang="en"><strong>New submission arrives</strong> - it appears as a row in Google Sheets and as a Discord embed in <code>#new-submissions</code>. Community members can immediately react and discuss.</li>
+        <li data-lang="nl"><strong>Nieuwe inzending komt binnen</strong> - verschijnt als rij in Google Sheets en als Discord-embed in <code>#nieuwe-meldingen</code>. Community-leden kunnen direct reageren en discussieren.</li>
+
+        <li data-lang="en"><strong>Triage</strong> - add a "Status" column to the Sheet (e.g., New / Investigating / Ready / Published / Closed). Filter and sort by municipality, delay months, or cause to find the most impactful stories.</li>
+        <li data-lang="nl"><strong>Triage</strong> - voeg een "Status" kolom toe aan het Sheet (bijv. Nieuw / In Onderzoek / Klaar / Gepubliceerd / Gesloten). Filter en sorteer op gemeente, maanden vertraging of oorzaak om de meest impactvolle verhalen te vinden.</li>
+
+        <li data-lang="en"><strong>Pick up a case</strong> - when Hoog decides to investigate, post a summary in <code>#under-investigation</code> and update the Sheet status. The community can provide tips, local knowledge, or similar experiences.</li>
+        <li data-lang="nl"><strong>Pak een zaak op</strong> - wanneer Hoog besluit te onderzoeken, post een samenvatting in <code>#in-onderzoek</code> en werk de Sheet-status bij. De community kan tips, lokale kennis of vergelijkbare ervaringen delen.</li>
+
+        <li data-lang="en"><strong>Ready for video</strong> - move to <code>#ready-for-video</code> when evidence is gathered. After the Hoog episode, post the video link back and mark the case as Published.</li>
+        <li data-lang="nl"><strong>Klaar voor video</strong> - verplaats naar <code>#klaar-voor-video</code> wanneer bewijs is verzameld. Na de Hoog-aflevering, post de videolink terug en markeer de zaak als Gepubliceerd.</li>
+      </ol>
+
+      <div class="callout" data-lang="en">
+        <strong>Scaling up later:</strong> If volume grows, consider adding Airtable as a visual frontend to the Sheet data (sync via Zapier free tier), or build a public tracker page on the site that reads from a published Google Sheet JSON feed. Both are free.
+      </div>
+      <div class="callout" data-lang="nl">
+        <strong>Later opschalen:</strong> Als het volume groeit, overweeg Airtable als visuele frontend voor de Sheet-data (sync via Zapier gratis tier), of bouw een publieke tracker-pagina op de site die leest van een gepubliceerde Google Sheet JSON-feed. Beide zijn gratis.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4><span style="color:var(--accent);">YIMBY</span> Nederland</h4>
+        <p data-lang="en">A Georgist, pro-abundance movement to end artificial housing scarcity in the Netherlands. Supported by the <a href="https://youtube.com/@hoog" target="_blank">Hoog</a> YouTube channel.</p>
+        <p data-lang="nl">Een Georgistische, pro-ovvloed beweging om kunstmatige woningschaarste in Nederland te beëindigen. Ondersteund door het <a href="https://youtube.com/@hoog" target="_blank">Hoog</a> YouTube-kanaal.</p>
+      </div>
+      <div>
+        <h4 data-lang="en">Pages</h4>
+        <h4 data-lang="nl">Pagina's</h4>
+        <ul>
+          <li><a href="index.html" data-lang="en">Home</a><a href="index.html" data-lang="nl">Home</a></li>
+          <li><a href="policy.html" data-lang="en">Policy Platform</a><a href="policy.html" data-lang="nl">Beleidsplatform</a></li>
+          <li><a href="report.html" data-lang="en">Report a Delay</a><a href="report.html" data-lang="nl">Meld Vertraging</a></li>
+          <li><a href="about.html" data-lang="en">About / Ideology</a><a href="about.html" data-lang="nl">Over Ons / Ideologie</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-lang="en">Resources</h4>
+        <h4 data-lang="nl">Bronnen</h4>
+        <ul>
+          <li><a href="#" target="_blank">Discord Community</a></li>
+          <li><a href="https://youtube.com/@hoog" target="_blank">Hoog on YouTube</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Georgism" target="_blank">Georgism (Wikipedia)</a></li>
+          <li><a href="https://www.yimbyalliance.org" target="_blank">YIMBY Alliance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <span>&copy; 2026 YIMBY Nederland. <span data-lang="en">All rights reserved.</span><span data-lang="nl">Alle rechten voorbehouden.</span></span>
+      <span data-lang="en">Pragmatic solutions for better housing.</span>
+      <span data-lang="nl">Pragmatische oplossingen voor beter wonen.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>

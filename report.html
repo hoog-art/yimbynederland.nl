@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report a Housing Delay - YIMBY Nederland</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="top-nav">
+  <div class="wrap">
+    <a href="index.html" class="logo"><span class="accent">YIMBY</span> Nederland</a>
+    <button class="hamburger" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html" data-lang="en">Home</a><a href="index.html" data-lang="nl">Home</a></li>
+      <li><a href="policy.html" data-lang="en">Policy</a><a href="policy.html" data-lang="nl">Beleid</a></li>
+      <li><a href="report.html" data-lang="en">Report a Delay</a><a href="report.html" data-lang="nl">Meld Vertraging</a></li>
+      <li><a href="about.html" data-lang="en">About</a><a href="about.html" data-lang="nl">Over Ons</a></li>
+      <li><span class="lang-toggle"><button data-lang="en">EN</button><button data-lang="nl">NL</button></span></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" style="padding:3.5rem 0 3rem;">
+  <div class="wrap">
+    <h1 data-lang="en">Report a Housing Delay</h1>
+    <h1 data-lang="nl">Meld een Bouwvertraging</h1>
+    <p class="lead" data-lang="en">Tried to build, extend, or add housing and ran into unexpected delays? We collect experiences with housing delays to investigate patterns and advocate for better processes.</p>
+    <p class="lead" data-lang="nl">Geprobeerd te bouwen, uitbreiden of woningen toe te voegen en tegen onverwachte vertragingen aangelopen? Wij verzamelen ervaringen met bouwvertragingen om patronen te onderzoeken en te pleiten voor betere processen.</p>
+  </div>
+</header>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section>
+  <div class="wrap">
+    <div class="section-header">
+      <h2 data-lang="en">How It Works</h2>
+      <h2 data-lang="nl">Hoe Het Werkt</h2>
+    </div>
+    <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
+      <div class="card" style="text-align:center;">
+        <div class="icon" style="margin:0 auto 1rem;">1️⃣</div>
+        <h4 data-lang="en">You Submit</h4>
+        <h4 data-lang="nl">Jij Meldt</h4>
+        <p data-lang="en">Tell us what you tried to build, where, and what stopped you.</p>
+        <p data-lang="nl">Vertel ons wat je probeerde te bouwen, waar, en wat je tegenhield.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="icon" style="margin:0 auto 1rem;">2️⃣</div>
+        <h4 data-lang="en">We Investigate</h4>
+        <h4 data-lang="nl">Wij Onderzoeken</h4>
+        <p data-lang="en">Our team reviews submissions and identifies cases that illustrate systemic problems.</p>
+        <p data-lang="nl">Ons team beoordeelt meldingen en identificeert gevallen die systemische problemen illustreren.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="icon" style="margin:0 auto 1rem;">3️⃣</div>
+        <h4 data-lang="en">We Publish</h4>
+        <h4 data-lang="nl">Wij Publiceren</h4>
+        <p data-lang="en">With your permission, we feature your story in Hoog videos and articles to support evidence-based policy reform.</p>
+        <p data-lang="nl">Met jouw toestemming behandelen we je verhaal in Hoog-video's en artikelen om evidence-based beleidshervorming te ondersteunen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PIPELINE ═══ -->
+<section>
+  <div class="wrap" style="max-width:720px;">
+    <div class="callout green">
+      <strong data-lang="en">Where does your report go?</strong>
+      <strong data-lang="nl">Waar gaat je melding heen?</strong>
+      <p data-lang="en" class="mt-1" style="font-size:.9rem;">Every submission is logged in a shared Google Sheet - creating a growing, searchable database of housing delays across the Netherlands. New submissions are automatically posted to our Discord, where community members and our investigation team can discuss and prioritize cases. Join the Discord to follow along.</p>
+      <p data-lang="nl" class="mt-1" style="font-size:.9rem;">Elke melding wordt gelogd in een gedeeld Google Sheet - een groeiende, doorzoekbare database van bouwvertragingen door heel Nederland. Nieuwe meldingen worden automatisch gepost in onze Discord, waar communityleden en ons onderzoeksteam gevallen kunnen bespreken en prioriteren. Join de Discord om mee te kijken.</p>
+      <a href="#" class="btn btn-outline" style="margin-top:.75rem; font-size:.85rem;" data-lang="en">Join Discord</a>
+      <a href="#" class="btn btn-outline" style="margin-top:.75rem; font-size:.85rem;" data-lang="nl">Join Discord</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FORM ═══ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-header">
+      <h2 data-lang="en">Submit Your Report</h2>
+      <h2 data-lang="nl">Dien Je Melding In</h2>
+      <p class="lead" data-lang="en">All fields marked * are required. Your information is kept confidential unless you opt in to being featured.</p>
+      <p class="lead" data-lang="nl">Alle velden met * zijn verplicht. Je informatie blijft vertrouwelijk tenzij je toestemming geeft om uitgelicht te worden.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="delay-form">
+
+        <!-- CONTACT -->
+        <h3 data-lang="en" style="margin-bottom:1rem;">Your Details</h3>
+        <h3 data-lang="nl" style="margin-bottom:1rem;">Jouw Gegevens</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label data-lang="en">Full name *</label>
+            <label data-lang="nl">Volledige naam *</label>
+            <input type="text" name="name" required>
+          </div>
+          <div class="form-group">
+            <label data-lang="en">Email address *</label>
+            <label data-lang="nl">E-mailadres *</label>
+            <input type="email" name="email" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label data-lang="en">Phone (optional)</label>
+            <label data-lang="nl">Telefoonnummer (optioneel)</label>
+            <input type="tel" name="phone">
+          </div>
+          <div class="form-group">
+            <label data-lang="en">Municipality *</label>
+            <label data-lang="nl">Gemeente *</label>
+            <input type="text" name="municipality" required placeholder="e.g. Amsterdam, Rotterdam, Utrecht...">
+          </div>
+        </div>
+
+        <!-- PROJECT -->
+        <h3 data-lang="en" style="margin: 1.5rem 0 1rem;">The Project</h3>
+        <h3 data-lang="nl" style="margin: 1.5rem 0 1rem;">Het Project</h3>
+
+        <div class="form-group">
+          <label data-lang="en">What type of project? *</label>
+          <label data-lang="nl">Wat voor type project? *</label>
+          <select name="project_type" required>
+            <option value="" data-lang="en">Select one...</option>
+            <option value="" data-lang="nl">Selecteer...</option>
+            <option value="dakopbouw">Dakopbouw (roof extension)</option>
+            <option value="optopping">Optopping (adding floors)</option>
+            <option value="adu">ADU / bijgebouw (accessory dwelling)</option>
+            <option value="splitsen">Woningsplitsing (splitting a home)</option>
+            <option value="nieuwbouw-klein">Nieuwbouw - small (1–10 units)</option>
+            <option value="nieuwbouw-groot">Nieuwbouw - large (10+ units)</option>
+            <option value="verbouwing">Verbouwing (renovation to add units)</option>
+            <option value="transformatie">Transformatie (office/retail → residential)</option>
+            <option value="other">Other / Anders</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">How many units were you trying to add? *</label>
+          <label data-lang="nl">Hoeveel woningen probeerde je toe te voegen? *</label>
+          <input type="number" name="units" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">Address or neighbourhood (as specific as you're comfortable) *</label>
+          <label data-lang="nl">Adres of buurt (zo specifiek als je wilt) *</label>
+          <input type="text" name="location" required>
+        </div>
+
+        <!-- DELAY -->
+        <h3 data-lang="en" style="margin: 1.5rem 0 1rem;">The Delay</h3>
+        <h3 data-lang="nl" style="margin: 1.5rem 0 1rem;">De Vertraging</h3>
+
+        <div class="form-group">
+          <label data-lang="en">What caused the delay? (select all that apply) *</label>
+          <label data-lang="nl">Wat veroorzaakte de vertraging? (selecteer alles dat van toepassing is) *</label>
+          <div style="display:flex; flex-direction:column; gap:.5rem; margin-top:.35rem;">
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="bezwaar"><span data-lang="en">Bezwaar (objection by neighbours/others)</span><span data-lang="nl">Bezwaar (bezwaar door buren/anderen)</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="welstand"><span data-lang="en">Welstandscommissie rejection</span><span data-lang="nl">Afwijzing door welstandscommissie</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="permit_delay"><span data-lang="en">Permit processing delay (municipality too slow)</span><span data-lang="nl">Vergunningsvertraging (gemeente te traag)</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="bestemmingsplan"><span data-lang="en">Bestemmingsplan / zoning conflict</span><span data-lang="nl">Bestemmingsplan-conflict</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="parking"><span data-lang="en">Parking requirements too high</span><span data-lang="nl">Te hoge parkeernormen</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="height"><span data-lang="en">Height restriction</span><span data-lang="nl">Hoogtebeperking</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="monument"><span data-lang="en">Monument / heritage protection</span><span data-lang="nl">Monument / erfgoedbescherming</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="milieu"><span data-lang="en">Environmental/nitrogen rules (stikstof)</span><span data-lang="nl">Milieu/stikstofregels</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="circular"><span data-lang="en">Circular building requirements</span><span data-lang="nl">Circulaire bouweisen</span></div>
+            <div class="checkbox-group"><input type="checkbox" name="cause" value="other_cause"><span data-lang="en">Other (describe below)</span><span data-lang="nl">Anders (beschrijf hieronder)</span></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label data-lang="en">When did you first apply / start? *</label>
+            <label data-lang="nl">Wanneer heb je voor het eerst aangevraagd / gestart? *</label>
+            <input type="month" name="start_date" required>
+          </div>
+          <div class="form-group">
+            <label data-lang="en">Current status *</label>
+            <label data-lang="nl">Huidige status *</label>
+            <select name="status" required>
+              <option value="" data-lang="en">Select...</option>
+              <option value="" data-lang="nl">Selecteer...</option>
+              <option value="still_waiting" data-lang="en">Still waiting for approval</option>
+              <option value="still_waiting" data-lang="nl">Wacht nog op goedkeuring</option>
+              <option value="approved_delayed" data-lang="en">Eventually approved, but severely delayed</option>
+              <option value="approved_delayed" data-lang="nl">Uiteindelijk goedgekeurd, maar ernstig vertraagd</option>
+              <option value="denied" data-lang="en">Denied / rejected</option>
+              <option value="denied" data-lang="nl">Afgewezen</option>
+              <option value="gave_up" data-lang="en">Gave up</option>
+              <option value="gave_up" data-lang="nl">Opgegeven</option>
+              <option value="in_beroep" data-lang="en">In appeal (beroep)</option>
+              <option value="in_beroep" data-lang="nl">In beroep</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">Estimated delay in months *</label>
+          <label data-lang="nl">Geschatte vertraging in maanden *</label>
+          <input type="number" name="delay_months" min="0" required>
+          <p class="help" data-lang="en">How many extra months beyond the standard processing time?</p>
+          <p class="help" data-lang="nl">Hoeveel extra maanden bovenop de standaard doorlooptijd?</p>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">Estimated additional cost due to delay (€, optional)</label>
+          <label data-lang="nl">Geschatte extra kosten door vertraging (€, optioneel)</label>
+          <input type="number" name="extra_cost" min="0" placeholder="e.g. 25000">
+          <p class="help" data-lang="en">Include architect fees, holding costs, lost rental income, etc.</p>
+          <p class="help" data-lang="nl">Inclusief architectkosten, houdkosten, gederfde huurinkomsten, etc.</p>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">Tell us your story *</label>
+          <label data-lang="nl">Vertel ons je verhaal *</label>
+          <textarea name="story" required placeholder="What happened? What was unreasonable? What would have been different under better rules?"></textarea>
+        </div>
+
+        <!-- EVIDENCE -->
+        <h3 data-lang="en" style="margin: 1.5rem 0 1rem;">Evidence (Optional)</h3>
+        <h3 data-lang="nl" style="margin: 1.5rem 0 1rem;">Bewijsmateriaal (Optioneel)</h3>
+
+        <div class="form-group">
+          <label data-lang="en">Upload documents (permit letters, bezwaar correspondence, etc.)</label>
+          <label data-lang="nl">Upload documenten (vergunningsbrieven, bezwaarcorrespondentie, etc.)</label>
+          <input type="file" name="documents" multiple accept=".pdf,.jpg,.png,.doc,.docx">
+          <p class="help" data-lang="en">Max 10 MB per file. PDF, images, or Word documents.</p>
+          <p class="help" data-lang="nl">Max 10 MB per bestand. PDF, afbeeldingen of Word-documenten.</p>
+        </div>
+
+        <div class="form-group">
+          <label data-lang="en">Links to relevant public records or news articles</label>
+          <label data-lang="nl">Links naar relevante openbare stukken of nieuwsartikelen</label>
+          <textarea name="links" rows="3" placeholder="https://..."></textarea>
+        </div>
+
+        <!-- CONSENT -->
+        <h3 data-lang="en" style="margin: 1.5rem 0 1rem;">Consent &amp; Contact</h3>
+        <h3 data-lang="nl" style="margin: 1.5rem 0 1rem;">Toestemming &amp; Contact</h3>
+
+        <div class="checkbox-group">
+          <input type="checkbox" name="consent_investigate" required>
+          <span data-lang="en">I consent to YIMBY Nederland reviewing my submission for potential investigation. *</span>
+          <span data-lang="nl">Ik geef toestemming aan YIMBY Nederland om mijn melding te beoordelen voor mogelijk onderzoek. *</span>
+        </div>
+        <div class="checkbox-group mt-1">
+          <input type="checkbox" name="consent_contact">
+          <span data-lang="en">You may contact me for follow-up questions or interviews.</span>
+          <span data-lang="nl">U mag contact met mij opnemen voor vervolgvragen of interviews.</span>
+        </div>
+        <div class="checkbox-group mt-1">
+          <input type="checkbox" name="consent_publish">
+          <span data-lang="en">My story may be featured (anonymised by default) in Hoog videos/articles.</span>
+          <span data-lang="nl">Mijn verhaal mag (standaard geanonimiseerd) worden uitgelicht in Hoog-video's/artikelen.</span>
+        </div>
+        <div class="checkbox-group mt-1">
+          <input type="checkbox" name="consent_named">
+          <span data-lang="en">I'm willing to be named publicly if featured.</span>
+          <span data-lang="nl">Ik wil bij naam genoemd worden als ik wordt uitgelicht.</span>
+        </div>
+
+        <div class="mt-3">
+          <button type="submit" class="btn btn-primary" style="width:100%;" data-lang="en">Submit Report</button>
+          <button type="submit" class="btn btn-primary" style="width:100%;" data-lang="nl">Melding Indienen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT HAPPENS NEXT ═══ -->
+<section>
+  <div class="wrap" style="max-width:720px;">
+    <div class="section-header">
+      <h2 data-lang="en">What Happens Next</h2>
+      <h2 data-lang="nl">Wat Daarna Gebeurt</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4 data-lang="en">Review (1–2 weeks)</h4>
+        <h4 data-lang="nl">Beoordeling (1–2 weken)</h4>
+        <p data-lang="en">Our team reads every submission and categorises it by delay type and municipality.</p>
+        <p data-lang="nl">Ons team leest elke melding en categoriseert deze op type vertraging en gemeente.</p>
+      </div>
+      <div class="timeline-item">
+        <h4 data-lang="en">Follow-up (if consented)</h4>
+        <h4 data-lang="nl">Vervolgcontact (indien toestemming)</h4>
+        <p data-lang="en">We may reach out for additional details, documents, or an interview.</p>
+        <p data-lang="nl">We nemen mogelijk contact op voor aanvullende details, documenten of een interview.</p>
+      </div>
+      <div class="timeline-item">
+        <h4 data-lang="en">Investigation</h4>
+        <h4 data-lang="nl">Onderzoek</h4>
+        <p data-lang="en">For cases that illustrate systemic problems, we dig deeper - reviewing municipal records, interviewing officials, and building a complete picture.</p>
+        <p data-lang="nl">Voor gevallen die systemische problemen illustreren, graven we dieper - gemeentelijke stukken inzien, ambtenaren interviewen en een compleet beeld opbouwen.</p>
+      </div>
+      <div class="timeline-item">
+        <h4 data-lang="en">Publication</h4>
+        <h4 data-lang="nl">Publicatie</h4>
+        <p data-lang="en">Featured stories become Hoog YouTube videos, articles, and evidence presented to policymakers advocating for reform.</p>
+        <p data-lang="nl">Uitgelichte verhalen worden Hoog YouTube-video's, artikelen en bewijsmateriaal gepresenteerd aan beleidsmakers die pleiten voor hervorming.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4><span style="color:var(--accent);">YIMBY</span> Nederland</h4>
+        <p data-lang="en">A Georgist, pro-abundance movement to end artificial housing scarcity in the Netherlands. Supported by the <a href="https://youtube.com/@hoog" target="_blank">Hoog</a> YouTube channel.</p>
+        <p data-lang="nl">Een Georgistische, pro-overvloed beweging om kunstmatige woningschaarste in Nederland te beëindigen. Ondersteund door het <a href="https://youtube.com/@hoog" target="_blank">Hoog</a> YouTube-kanaal.</p>
+      </div>
+      <div>
+        <h4 data-lang="en">Pages</h4><h4 data-lang="nl">Pagina's</h4>
+        <ul>
+          <li><a href="index.html" data-lang="en">Home</a><a href="index.html" data-lang="nl">Home</a></li>
+          <li><a href="policy.html" data-lang="en">Policy Platform</a><a href="policy.html" data-lang="nl">Beleidsplatform</a></li>
+          <li><a href="report.html" data-lang="en">Report a Delay</a><a href="report.html" data-lang="nl">Meld Vertraging</a></li>
+          <li><a href="about.html" data-lang="en">About / Ideology</a><a href="about.html" data-lang="nl">Over Ons / Ideologie</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-lang="en">Resources</h4><h4 data-lang="nl">Bronnen</h4>
+        <ul>
+          <li><a href="#" target="_blank">Discord Community</a></li>
+          <li><a href="https://youtube.com/@hoog" target="_blank">Hoog on YouTube</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Georgism" target="_blank">Georgism (Wikipedia)</a></li>
+          <li><a href="https://www.yimbyalliance.org" target="_blank">YIMBY Alliance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <span>&copy; 2026 YIMBY Nederland</span>
+      <span data-lang="en">Pragmatic solutions for better housing.</span>
+      <span data-lang="nl">Pragmatische oplossingen voor beter wonen.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>
