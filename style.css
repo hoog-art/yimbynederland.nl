@@ -245,5 +245,3 @@ body.nl li[data-lang="nl"] { display: block !important; }
 body.nl button[data-lang="nl"] { display: inline-block !important; }
 body.nl legend[data-lang="nl"] { display: block !important; }
 body.nl label[data-lang="nl"] { display: block !important; }
-/* Ensure lang toggle buttons are always visible (high specificity to override body.nl rules) */
-body .lang-toggle button[data-lang] { display: inline-block !important; }
