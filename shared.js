@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            setLang(btn.dataset.lang);
+            setLang(btn.dataset.switchLang);
         });
     });
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('nl');
         }
         document.querySelectorAll('.lang-toggle button').forEach(b => {
-            if (b.dataset.lang === lang) {
+            if (b.dataset.switchLang === lang) {
                 b.classList.add('active');
             } else {
                 b.classList.remove('active');
