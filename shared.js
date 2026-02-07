@@ -1,11 +1,8 @@
-/* ═══════════════════════════════════════════
-   YIMBY Nederland — shared.js
-   Language toggle + mobile nav
-   ═══════════════════════════════════════════ */
+/* YIMBY Nederland — shared.js — Language toggle + mobile nav + form submission */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── Language toggle ──────────────────── */
+  /* Language toggle */
   const savedLang = localStorage.getItem('yimby-lang') || 'nl';
   setLang(savedLang);
 
@@ -18,14 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function setLang(lang) {
-    // Toggle body class
     if (lang === 'nl') {
       document.body.classList.add('nl');
     } else {
       document.body.classList.remove('nl');
     }
-
-    // Update button states
     document.querySelectorAll('.lang-toggle button').forEach(b => {
       if (b.dataset.lang === lang) {
         b.classList.add('active');
@@ -33,12 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         b.classList.remove('active');
       }
     });
-
-    // Save preference
     localStorage.setItem('yimby-lang', lang);
   }
 
-  /* ── Mobile hamburger ─────────────────── */
+  /* Mobile hamburger */
   const hamburger = document.querySelector('.hamburger');
   const navList   = document.querySelector('.nav-links');
   if (hamburger && navList) {
@@ -48,9 +40,55 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  /* ── Mark active nav link ─────────────── */
+  /* Mark active nav link */
   const page = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === page) a.classList.add('active');
   });
+
+  /* Form submission handling */
+  const form = document.getElementById('storyForm');
+  const successMsg = document.getElementById('successMessage');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      // Collect all checked delays
+      const delays = [];
+      document.querySelectorAll('input[name="delays"]:checked').forEach(checkbox => {
+        delays.push(checkbox.value);
+      });
+
+      if (delays.length > 0) {
+        formData.append('delays', delays.join(', '));
+      }
+
+      // Submit via Formspree
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          form.style.display = 'none';
+          if (successMsg) {
+            successMsg.style.display = 'block';
+          }
+          successMsg.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          alert('There was an issue with your submission. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an issue with your submission. Please try again.');
+      });
+    });
+  }
 });
