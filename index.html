@@ -3,80 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YIMBY Nederland - Report Housing Construction Delays</title>
+    <title>YIMBY Nederland â Bezwaarkaart</title>
+    <meta name="description" content="Interactieve kaart van bezwaarprocedures tegen bouwprojecten in Nederland. Steun woningbouw in jouw buurt.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="top-nav">
-    <div class="wrap">
-        <a href="index.html" class="logo">
-            <span class="accent">YIMBY</span> Nederland
-        </a>
+    <div class="container">
+        <a href="#" class="logo"><span class="accent">YIMBY</span> Nederland</a>
         <button class="hamburger" aria-label="Menu">&#9776;</button>
         <ul class="nav-links">
+            <li><a href="#kaart">Kaart</a></li>
+            <li><a href="#bezwaar-melden">Bezwaar Melden</a></li>
+            <li><a href="#verhaal">Verhaal Delen</a></li>
+            <li><a href="https://youtube.com/@hoog-youtube" target="_blank">Hoog op YouTube</a></li>
         </ul>
     </div>
 </nav>
 
 <!-- HERO -->
 <header class="hero">
-    <div class="wrap">
-        <h1>Weet je van een bouwproject dat vertraagd of geblokkeerd werd?</h1>
-
-        <p class="lead">
-            Vertel ons erover — misschien maken we er een video over op Hoog. Deel details over wat er gebeurde, en we kijken ernaar.
-        </p>
+    <div class="container">
+        <div class="hero-badge">Interactieve Bezwaarkaart</div>
+        <h1>Steun bouwprojecten in jouw buurt</h1>
+        <p class="lead">Zie waar bezwaarprocedures lopen tegen woningbouw. Ga naar de hoorzitting, spreek je uit, en help de woningnood oplossen.</p>
+        <div class="hero-actions">
+            <a href="#kaart" class="btn btn-primary">Bekijk de Kaart</a>
+            <a href="#bezwaar-melden" class="btn btn-outline">Meld een Bezwaar</a>
+        </div>
     </div>
 </header>
 
+<!-- MAP -->
+<section id="kaart" class="map-section">
+    <div class="container-wide">
+        <div class="map-wrapper">
+            <div class="map-sidebar" id="mapSidebar">
+                <div class="sidebar-header">
+                    <h3>Bezwaarprocedures</h3>
+                    <p class="text-muted">Klik op een punt voor details</p>
+                </div>
+                <div class="sidebar-filters">
+                    <select id="filterGemeente">
+                        <option value="">Alle gemeenten</option>
+                    </select>
+                    <select id="filterStatus">
+                        <option value="">Alle statussen</option>
+                        <option value="upcoming">Binnenkort</option>
+                        <option value="past">Afgelopen</option>
+                    </select>
+                </div>
+                <div class="sidebar-list" id="meetingList">
+                    <div class="sidebar-empty">
+                        <p>Nog geen bezwaarprocedures gemeld.</p>
+                        <a href="#bezwaar-melden" class="btn btn-primary btn-sm">Wees de eerste!</a>
+                    </div>
+                </div>
+            </div>
+            <div id="map" class="map-container"></div>
+        </div>
+    </div>
+</section>
+
 <!-- HOW IT WORKS -->
-<section class="alt">
-    <div class="wrap">
+<section id="hoe-het-werkt" class="section bg-light">
+    <div class="container">
         <div class="section-header">
             <h2>Hoe Het Werkt</h2>
+            <p class="lead">In drie stappen van melding naar actie</p>
         </div>
         <div class="card-grid">
             <div class="card">
-                <div class="icon">&#x1F4DD;</div>
-                <h3>Jij Meldt</h3>
-                <p>
-                    Vul het formulier in met details over het project en wat het blokkeerde. Hoe meer details, hoe beter.
-                </p>
+                <div class="card-icon">1</div>
+                <h3>Meld een Bezwaar</h3>
+                <p>Zie je een bezwaarprocedure tegen een bouwproject? Meld het met de details: locatie, datum hoorzitting, en waarom het project belangrijk is.</p>
             </div>
             <div class="card">
-                <div class="icon">&#x1F50D;</div>
-                <h3>We Kijken Ernaar</h3>
-                <p>
-                    Ons team beoordeelt je indiening en onderzoekt het verhaal om te begrijpen wat er gebeurde en waarom.
-                </p>
+                <div class="card-icon">2</div>
+                <h3>Vind het op de Kaart</h3>
+                <p>Alle gemelde bezwaren verschijnen op de interactieve kaart. Filter op gemeente of status om te zien wat er bij jou in de buurt speelt.</p>
             </div>
             <div class="card">
-                <div class="icon">&#x1F3AC;</div>
-                <h3>We Maken Misschien een Video</h3>
-                <p>
-                    Als het een sterk verhaal is, maken we een video op het Hoog YouTube-kanaal om te delen wat we vonden.
-                </p>
+                <div class="card-icon">3</div>
+                <h3>Ga Erheen &amp; Spreek Je Uit</h3>
+                <p>Hoorzittingen zijn openbaar. Ga erheen, gebruik de praterpunten, en spreek je uit v&oacute;&oacute;r het bouwproject. Elke stem telt.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FORM -->
-<section>
-    <div class="wrap">
+<!-- BEZWAAR FORM -->
+<section id="bezwaar-melden" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Bezwaar Melden</h2>
+            <p class="lead">Weet je van een bezwaarprocedure tegen een bouwproject? Meld het zodat andere YIMBYs er naartoe kunnen.</p>
+        </div>
+        <div class="form-card">
+            <form id="bezwaarForm">
+                <fieldset>
+                    <legend>Over het Project</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bz-project">Projectnaam *</label>
+                            <input type="text" id="bz-project" name="project_naam" required placeholder="Bijv. Nieuwbouw Zuidas Blok C">
+                        </div>
+                        <div class="form-group">
+                            <label for="bz-gemeente">Gemeente *</label>
+                            <input type="text" id="bz-gemeente" name="gemeente" required placeholder="Amsterdam, Rotterdam, Utrecht...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bz-adres">Adres / Locatie</label>
+                        <input type="text" id="bz-adres" name="adres" placeholder="Straatnaam en huisnummer (indien bekend)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bz-woningen">Aantal woningen</label>
+                            <input type="number" id="bz-woningen" name="aantal_woningen" min="0" placeholder="150">
+                        </div>
+                        <div class="form-group">
+                            <label for="bz-type">Projecttype</label>
+                            <select id="bz-type" name="projecttype">
+                                <option value="">- Selecteer -</option>
+                                <option value="nieuwbouw">Nieuwbouw</option>
+                                <option value="dakopbouw">Dakopbouw</option>
+                                <option value="optopping">Optopping</option>
+                                <option value="transformatie">Transformatie</option>
+                                <option value="woningsplitsing">Woningsplitsing</option>
+                                <option value="verdichting">Verdichting</option>
+                                <option value="anders">Anders</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bz-beschrijving">Beschrijving *</label>
+                        <textarea id="bz-beschrijving" name="beschrijving" required placeholder="Wat is dit project en waarom wordt er bezwaar tegen gemaakt?"></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Over de Hoorzitting</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bz-datum">Datum hoorzitting</label>
+                            <input type="date" id="bz-datum" name="bezwaar_datum">
+                        </div>
+                        <div class="form-group">
+                            <label for="bz-tijd">Tijd</label>
+                            <input type="time" id="bz-tijd" name="bezwaar_tijd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bz-locatie">Locatie hoorzitting</label>
+                        <input type="text" id="bz-locatie" name="locatie_hoorzitting" placeholder="Bijv. Stadhuis Amsterdam, Kamer 1.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="bz-link">Link naar officieel bericht</label>
+                        <input type="url" id="bz-link" name="link_officieel" placeholder="https://...">
+                        <div class="help">Link naar de bekendmaking op overheid.nl of de gemeentesite</div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Voor YIMBYs</legend>
+                    <div class="form-group">
+                        <label for="bz-waarom">Waarom is dit project belangrijk?</label>
+                        <textarea id="bz-waarom" name="waarom_belangrijk" placeholder="Bijv. Dit project levert 200 betaalbare woningen op in een gebied met grote woningnood..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bz-punten">Praterpunten voor supporters</label>
+                        <textarea id="bz-punten" name="praterpunten" placeholder="Geef handige argumenten die supporters kunnen gebruiken op de hoorzitting"></textarea>
+                        <div class="help">Bijv. het project voldoet aan alle veiligheidsnormen, er is grote behoefte aan woningen, het ontwerp past bij de buurt</div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Je Gegevens</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bz-naam">Naam</label>
+                            <input type="text" id="bz-naam" name="naam" placeholder="Optioneel">
+                        </div>
+                        <div class="form-group">
+                            <label for="bz-email">E-mail</label>
+                            <input type="email" id="bz-email" name="email" placeholder="Optioneel">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary btn-full">Meld dit Bezwaar</button>
+            </form>
+
+            <div id="bezwaarSuccess" class="success-message" style="display:none;">
+                <h3>Bedankt!</h3>
+                <p>Het bezwaar is gemeld en verschijnt op de kaart.</p>
+                <a href="#kaart" class="btn btn-outline btn-sm" style="margin-top:1rem;">Bekijk de Kaart</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STORY FORM -->
+<section id="verhaal" class="section bg-light">
+    <div class="container">
         <div class="section-header">
             <h2>Deel Je Verhaal</h2>
-            <p class="lead">Vul zoveel details in als je kunt. Hoe meer informatie, hoe beter we kunnen onderzoeken.</p>
+            <p class="lead">Weet je van een bouwproject dat vertraagd of geblokkeerd werd? Vertel ons erover â misschien maken we er een video over op Hoog.</p>
         </div>
-
         <div class="form-card">
-            <form id="storyForm" action="https://script.google.com/macros/s/AKfycbyp5pngvSQq97qaIXw2ZdV2LSA4_X7HBVTGpnktBfssN9kNZAluP_f3zAOe489xq5CS/exec" method="POST">
-
-                <fieldset class="form-fieldset">
+            <form id="storyForm">
+                <fieldset>
                     <legend>Je Gegevens</legend>
                     <div class="form-row">
                         <div class="form-group">
@@ -85,20 +227,18 @@
                         </div>
                         <div class="form-group">
                             <label for="email">E-mailadres *</label>
-                            <input type="email" id="email" name="email" required placeholder="je@voorbeeld.com">
+                            <input type="email" id="email" name="email" required placeholder="je@voorbeeld.nl">
                         </div>
                     </div>
                 </fieldset>
 
-                <fieldset class="form-fieldset">
+                <fieldset>
                     <legend>Projectdetails</legend>
-
                     <div class="form-group">
                         <label for="municipality">Gemeente *</label>
-                        <input type="text" id="municipality" name="municipality" required placeholder="Amsterdam, Rotterdam, Utrecht">
+                        <input type="text" id="municipality" name="municipality" required placeholder="Amsterdam, Rotterdam, Utrecht...">
                         <div class="help">In welke gemeente ligt het project?</div>
                     </div>
-
                     <div class="form-group">
                         <label for="projectType">Projecttype *</label>
                         <select id="projectType" name="projectType" required>
@@ -116,48 +256,48 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="form-fieldset">
+                <fieldset>
                     <legend>Wat Veroorzaakte de Vertraging?</legend>
-                    <div class="help">Vink alles aan wat van toepassing is:</div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div class="help" style="margin-bottom:1rem;">Vink alles aan wat van toepassing is:</div>
+                    <div class="checkbox-grid">
                         <div class="checkbox-group"><input type="checkbox" id="delay-bezwaar" name="delays" value="bezwaar"><label for="delay-bezwaar">Bezwaar procedures</label></div>
                         <div class="checkbox-group"><input type="checkbox" id="delay-welstand" name="delays" value="welstandscommissie"><label for="delay-welstand">Welstandscommissie</label></div>
-                        <div class="checkbox-group"><input type="checkbox" id="delay-permit" name="delays" value="permit-delay"><label for="delay-permit">Vergunning/licentie vertraging</label></div>
-                        <div class="checkbox-group"><input type="checkbox" id="delay-bestemming" name="delays" value="bestemmingsplan"><label for="delay-bestemming">Bestemmingsplan problemen</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="delay-permit" name="delays" value="permit-delay"><label for="delay-permit">Vergunning vertraging</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="delay-bestemming" name="delays" value="bestemmingsplan"><label for="delay-bestemming">Bestemmingsplan</label></div>
                         <div class="checkbox-group"><input type="checkbox" id="delay-parking" name="delays" value="parking"><label for="delay-parking">Parkeervereisten</label></div>
                         <div class="checkbox-group"><input type="checkbox" id="delay-height" name="delays" value="height"><label for="delay-height">Hoogtebeperkingen</label></div>
-                        <div class="checkbox-group"><input type="checkbox" id="delay-monument" name="delays" value="monument"><label for="delay-monument">Monument/erfgoebescherming</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="delay-monument" name="delays" value="monument"><label for="delay-monument">Monument/erfgoed</label></div>
                         <div class="checkbox-group"><input type="checkbox" id="delay-stikstof" name="delays" value="stikstof"><label for="delay-stikstof">Stikstof restricties</label></div>
-                        <div class="checkbox-group"><input type="checkbox" id="delay-circular" name="delays" value="circular"><label for="delay-circular">Circulaire bouwvereisten</label></div>
+                        <div class="checkbox-group"><input type="checkbox" id="delay-circular" name="delays" value="circular"><label for="delay-circular">Circulaire bouw</label></div>
                         <div class="checkbox-group"><input type="checkbox" id="delay-other" name="delays" value="other"><label for="delay-other">Anders</label></div>
                     </div>
                 </fieldset>
 
-                <fieldset class="form-fieldset">
+                <fieldset>
                     <legend>Vertel Je Verhaal</legend>
                     <div class="form-group">
                         <label for="story">Wat gebeurde er? *</label>
-                        <textarea id="story" name="story" required placeholder="Beschrijf het project, de belemmeringen, hoe lang de vertragingen waren..."></textarea>
-                        <div class="help">Wees zo specifiek mogelijk. Voeg datums, besluitvormers en exacte belemmeringen toe indien mogelijk.</div>
+                        <textarea id="story" name="story" required placeholder="Beschrijf het project, de belemmeringen, en de vertragingen..."></textarea>
+                        <div class="help">Wees zo specifiek mogelijk. Datums, besluitvormers, en exacte belemmeringen helpen.</div>
                     </div>
                     <div class="form-group">
                         <label for="delayMonths">Geschatte vertraging (maanden)</label>
-                        <input type="number" id="delayMonths" name="delayMonths" min="0" placeholder="6, 12, 24">
+                        <input type="number" id="delayMonths" name="delayMonths" min="0" placeholder="6, 12, 24...">
                     </div>
                 </fieldset>
 
-                <fieldset class="form-fieldset">
+                <fieldset>
                     <legend>Toestemmingen</legend>
-                    <div class="checkbox-group"><input type="checkbox" id="consent-review" name="consent-review" required><label for="consent-review">Ik geef toestemming aan YIMBY Nederland om dit verslag te beoordelen</label></div>
-                    <div class="checkbox-group"><input type="checkbox" id="consent-contact" name="consent-contact"><label for="consent-contact">Ik ben bereid om te worden gecontacteerd voor meer details of interviews</label></div>
-                    <div class="checkbox-group"><input type="checkbox" id="consent-feature" name="consent-feature"><label for="consent-feature">Ik geef toestemming voor mijn verhaal in YIMBY content (video's, artikelen, enz.)</label></div>
-                    <div class="checkbox-group"><input type="checkbox" id="consent-named" name="consent-named"><label for="consent-named">Ik ben bereid om openbaar te worden genoemd (indien uitgelicht)</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="consent-review" name="consent-review" required><label for="consent-review">Ik geef toestemming aan YIMBY Nederland om dit verslag te beoordelen *</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="consent-contact" name="consent-contact"><label for="consent-contact">Ik ben bereid om gecontacteerd te worden voor meer details</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="consent-feature" name="consent-feature"><label for="consent-feature">Ik geef toestemming voor mijn verhaal in YIMBY content</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="consent-named" name="consent-named"><label for="consent-named">Ik ben bereid om openbaar genoemd te worden</label></div>
                 </fieldset>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Dien Je Verhaal In</button>
+                <button type="submit" class="btn btn-primary btn-full">Dien Je Verhaal In</button>
             </form>
 
-            <div id="successMessage" class="success-message" style="display: none;">
+            <div id="successMessage" class="success-message" style="display:none;">
                 <h3>Dank je wel!</h3>
                 <p>We hebben je indiening ontvangen en zullen ernaar kijken.</p>
             </div>
@@ -167,34 +307,38 @@
 
 <!-- CTA -->
 <section class="cta-band">
-    <div class="wrap">
+    <div class="container">
         <h2>Bekijk Onze Video's op Hoog</h2>
-        <p class="lead" style="margin: 0 auto 1.5rem;">Zie de onderzoeken die we hebben gedaan en de verhalen die we hebben ontdekt.</p>
+        <p class="lead">Zie de onderzoeken die we hebben gedaan en de verhalen die we hebben ontdekt.</p>
         <a href="https://youtube.com/@hoog-youtube" target="_blank" class="btn btn-white">Bezoek Hoog op YouTube</a>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-    <div class="wrap">
+    <div class="container">
         <div class="footer-grid">
             <div>
-                <h4><span style="color:var(--accent);">YIMBY</span> Nederland</h4>
-                <p>Meld bouwvertragingen, zet hervorming in gang. Ondersteund door <a href="https://youtube.com/@hoog-youtube" target="_blank">Hoog</a>.</p>
+                <h4><span class="accent">YIMBY</span> Nederland</h4>
+                <p>Steun woningbouw, meld bezwaren, zet hervorming in gang. Ondersteund door <a href="https://youtube.com/@hoog-youtube" target="_blank">Hoog</a>.</p>
             </div>
             <div>
-                <h4>Snelkoppelingen</h4>
+                <h4>Links</h4>
                 <ul>
+                    <li><a href="#kaart">Bezwaarkaart</a></li>
+                    <li><a href="#bezwaar-melden">Bezwaar Melden</a></li>
+                    <li><a href="#verhaal">Verhaal Delen</a></li>
                     <li><a href="https://youtube.com/@hoog-youtube" target="_blank">Hoog op YouTube</a></li>
                 </ul>
             </div>
         </div>
         <div class="bottom-bar">
-            <span>&copy; 2026 YIMBY Nederland. Alle rechten voorbehouden.</span>
+            <span>&copy; 2026 YIMBY Nederland</span>
         </div>
     </div>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="shared.js"></script>
 </body>
 </html>
